@@ -2,7 +2,17 @@ version: '3.8'
 
 services:
   app:
-    container_name: flask-app
+    container_name: questions-service
+    image: questions-service:latest
+    environment:
+      DOCKER_DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres-db/${POSTGRES_DB}
+    ports:
+      - "8000:5000"
+    depends_on:
+      - postgres-db
+    networks:
+      - backend
+    restart: unless-stopped
   
   db:
     container_name: postgres-db
