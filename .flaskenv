@@ -1,3 +1,0 @@
-FLASK_APP=questions-service.py
-FLASK_CONFIG=development
-FLASK_DEBUG=1
