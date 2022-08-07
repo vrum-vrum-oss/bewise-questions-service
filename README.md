@@ -41,27 +41,3 @@ PGDATA = "/var/lib/postgresql/data/"
 Послать запрос к сервису с локального хоста можно в терминале с помощью утилиты cURL следующим образом:
 
 `curl -X POST -H "Content-Type: application/json" -d '{"questions_num": 2}'  http://localhost:8000/api/v1/questions`
-
-Для обращения с других машин сначала нужно определить IP-адрес сервиса, а номер порта следует взять из конфигурации `docker-compose.yml` (в базовом случае - порт 5000).
-Для этого выполните в терминале команду 
-
-`docker network inspect bewise-questions-service_backend` 
-
-и найдите IP-адрес сервиса (с СУБД можно поступить таким же образом).
-
-Пример: после инспектирования сети получен IP-адрес `192.168.16.3`:
-```
-"Containers": {
-        "8ab7b6aeb28bfd06e8aaa39140d05a817157488d129ac6373b67f2260e5437cf": {
-            "Name": "questions-service",
-            "EndpointID": "191d28471140b3c1b21790097cf70706f55c64cd167ed806fd5499bcd52c0064",
-            "MacAddress": "02:42:c0:a8:10:03",
-            "IPv4Address": "192.168.16.3/20",
-            "IPv6Address": ""
-        },
-    }
-```
-
-Тогда запрос выглядит следующим образом:
-
-`curl -X POST -H "Content-Type: application/json" -d '{"questions_num": 2}'  http://192.168.16.3:5000/api/v1/questions`
